@@ -1,0 +1,123 @@
+INFO:root:Namespace(model_name='DIN', model_mode='CTR')
+INFO:root:--------------------------------------------- BEGIN: 2025-12-29 21:37:14 ---------------------------------------------
+INFO:root:
+==========================================
+ Arguments                  | Values      
+==========================================
+ add_historical_situations  | 0          
+ att_layers                 | [64]       
+ batch_size                 | 1024       
+ data_appendix              | _context101
+ dataset                    | ML_1MCTR   
+ dnn_layers                 | [512,64]   
+ dropout                    | 0.5        
+ early_stop                 | 10         
+ emb_size                   | 64         
+ epoch                      | 200        
+ eval_batch_size            | 256        
+ gpu                        | 0          
+ history_max                | 20         
+ include_item_features      | 1          
+ include_situation_features | 1          
+ include_user_features      | 0          
+ l2                         | 0.0001     
+ loss_n                     | BCE        
+ lr                         | 0.0005     
+ main_metric                |            
+ num_neg                    | 0          
+ num_workers                | 5          
+ optimizer                  | Adam       
+ random_seed                | 0          
+ save_final_results         | 1          
+ test_all                   | 0          
+ topk                       | 5,10,20,50 
+==========================================
+INFO:root:Device: cuda
+INFO:root:Load corpus from ../data/ML_1MCTR/ContextSeqReader_context101.pkl
+INFO:root:#params: 1352386
+INFO:root:DINCTR(
+  (loss_fn): BCELoss()
+  (embedding_dict): ModuleDict(
+    (user_id): Embedding(6035, 64)
+    (item_id): Embedding(3126, 64)
+    (i_genre_c): Embedding(298, 64)
+    (i_title_c): Embedding(3126, 64)
+    (c_day_f): Linear(in_features=1, out_features=64, bias=False)
+    (c_hour_c): Embedding(24, 64)
+    (c_period_c): Embedding(9, 64)
+    (c_weekday_c): Embedding(7, 64)
+  )
+  (att_mlp_layers): MLP_Block(
+    (mlp): Sequential(
+      (0): Linear(in_features=768, out_features=64, bias=True)
+      (1): Sigmoid()
+      (2): Dropout(p=0.5, inplace=False)
+      (3): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (dnn_mlp_layers): MLP_Block(
+    (mlp): Sequential(
+      (0): Linear(in_features=896, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): Dice(
+        (bn): BatchNorm1d(512, eps=1e-08, momentum=0.1, affine=True, track_running_stats=True)
+        (sigmoid): Sigmoid()
+      )
+      (3): Dropout(p=0.5, inplace=False)
+      (4): Linear(in_features=512, out_features=64, bias=True)
+      (5): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (6): Dice(
+        (bn): BatchNorm1d(64, eps=1e-08, momentum=0.1, affine=True, track_running_stats=True)
+        (sigmoid): Sigmoid()
+      )
+      (7): Dropout(p=0.5, inplace=False)
+      (8): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+)
+INFO:root:Test Before Training: (AUC@All:0.4936,LOG_LOSS@All:0.6938)
+INFO:root:Optimizer: Adam
+INFO:root:Epoch 1     loss=0.5589 [22.5 s]	dev=(AUC@All:0.7803,LOG_LOSS@All:0.5668) [0.3 s] *
+INFO:root:Epoch 2     loss=0.5352 [18.5 s]	dev=(AUC@All:0.7735,LOG_LOSS@All:0.6017) [0.3 s]
+INFO:root:Epoch 3     loss=0.5300 [20.8 s]	dev=(AUC@All:0.7745,LOG_LOSS@All:0.5991) [0.3 s]
+INFO:root:Epoch 4     loss=0.5239 [18.9 s]	dev=(AUC@All:0.7732,LOG_LOSS@All:0.6452) [0.3 s]
+INFO:root:Epoch 5     loss=0.5196 [20.4 s]	dev=(AUC@All:0.7818,LOG_LOSS@All:0.5895) [0.3 s] *
+INFO:root:Epoch 6     loss=0.5169 [20.6 s]	dev=(AUC@All:0.7796,LOG_LOSS@All:0.5653) [0.3 s]
+INFO:root:Epoch 7     loss=0.5144 [19.0 s]	dev=(AUC@All:0.7788,LOG_LOSS@All:0.5824) [0.3 s]
+INFO:root:Epoch 8     loss=0.5123 [18.8 s]	dev=(AUC@All:0.7853,LOG_LOSS@All:0.5904) [0.4 s] *
+INFO:root:Epoch 9     loss=0.5096 [21.2 s]	dev=(AUC@All:0.7847,LOG_LOSS@All:0.5564) [0.3 s]
+INFO:root:Epoch 10    loss=0.5067 [20.2 s]	dev=(AUC@All:0.7806,LOG_LOSS@All:0.5866) [0.3 s]
+INFO:root:Epoch 11    loss=0.5037 [18.3 s]	dev=(AUC@All:0.7811,LOG_LOSS@All:0.5597) [0.3 s]
+INFO:root:Epoch 12    loss=0.5012 [20.4 s]	dev=(AUC@All:0.7882,LOG_LOSS@All:0.5560) [0.3 s] *
+INFO:root:Epoch 13    loss=0.4986 [18.7 s]	dev=(AUC@All:0.7905,LOG_LOSS@All:0.5556) [0.3 s] *
+INFO:root:Epoch 14    loss=0.4958 [21.0 s]	dev=(AUC@All:0.7923,LOG_LOSS@All:0.5902) [0.3 s] *
+INFO:root:Epoch 15    loss=0.4932 [18.9 s]	dev=(AUC@All:0.7687,LOG_LOSS@All:0.6871) [0.3 s]
+INFO:root:Epoch 16    loss=0.4910 [20.4 s]	dev=(AUC@All:0.7690,LOG_LOSS@All:0.5691) [0.3 s]
+INFO:root:Epoch 17    loss=0.4889 [20.6 s]	dev=(AUC@All:0.7856,LOG_LOSS@All:0.5547) [0.3 s]
+INFO:root:Epoch 18    loss=0.4867 [18.5 s]	dev=(AUC@All:0.7844,LOG_LOSS@All:0.5616) [0.3 s]
+INFO:root:Epoch 19    loss=0.4850 [21.1 s]	dev=(AUC@All:0.7799,LOG_LOSS@All:0.7276) [0.3 s]
+INFO:root:Epoch 20    loss=0.4832 [19.2 s]	dev=(AUC@All:0.7796,LOG_LOSS@All:0.5924) [0.4 s]
+INFO:root:Epoch 21    loss=0.4813 [21.2 s]	dev=(AUC@All:0.7951,LOG_LOSS@All:0.5753) [0.3 s] *
+INFO:root:Epoch 22    loss=0.4797 [21.0 s]	dev=(AUC@All:0.7816,LOG_LOSS@All:0.5836) [0.3 s]
+INFO:root:Epoch 23    loss=0.4776 [18.5 s]	dev=(AUC@All:0.7780,LOG_LOSS@All:0.5787) [0.3 s]
+INFO:root:Epoch 24    loss=0.4759 [20.6 s]	dev=(AUC@All:0.7591,LOG_LOSS@All:0.5870) [0.3 s]
+INFO:root:Epoch 25    loss=0.4742 [18.7 s]	dev=(AUC@All:0.7699,LOG_LOSS@All:0.6361) [0.3 s]
+INFO:root:Epoch 26    loss=0.4724 [19.3 s]	dev=(AUC@All:0.7703,LOG_LOSS@All:0.6140) [0.3 s]
+INFO:root:Epoch 27    loss=0.4712 [20.6 s]	dev=(AUC@All:0.7707,LOG_LOSS@All:0.5989) [0.4 s]
+INFO:root:Epoch 28    loss=0.4701 [19.7 s]	dev=(AUC@All:0.7752,LOG_LOSS@All:0.5794) [0.3 s]
+INFO:root:Epoch 29    loss=0.4686 [20.9 s]	dev=(AUC@All:0.7883,LOG_LOSS@All:0.5859) [0.4 s]
+INFO:root:Epoch 30    loss=0.4672 [18.5 s]	dev=(AUC@All:0.7634,LOG_LOSS@All:0.5919) [0.3 s]
+INFO:root:Early stop at 30 based on dev result.
+INFO:root:
+Best Iter(dev)=   21	 dev=(AUC@All:0.7951,LOG_LOSS@All:0.5753) [606.9 s] 
+INFO:root:Load model from ../model/DINCTR/DINCTR__ML_1MCTR_context101__0__lr=0.0005__l2=0.0001__emb_size=64__att_layers=[64]__add_historical_situations=0.pt
+INFO:root:
+Dev  After Training: (AUC@All:0.7951,LOG_LOSS@All:0.5753)
+INFO:root:
+Test After Training: (AUC@All:0.7954,LOG_LOSS@All:0.5706)
+INFO:root:Saving CTR prediction results to: ../log/DINCTR/DINCTR__ML_1MCTR_context101__0__lr=0/rec-DINCTR-dev.csv
+INFO:root:dev Prediction results saved!
+INFO:root:Saving CTR prediction results to: ../log/DINCTR/DINCTR__ML_1MCTR_context101__0__lr=0/rec-DINCTR-test.csv
+INFO:root:test Prediction results saved!
+INFO:root:
+--------------------------------------------- END: 2025-12-29 21:47:28 ---------------------------------------------

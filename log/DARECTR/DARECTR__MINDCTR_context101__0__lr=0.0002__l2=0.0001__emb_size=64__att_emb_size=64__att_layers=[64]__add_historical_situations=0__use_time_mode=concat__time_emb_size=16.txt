@@ -1,0 +1,109 @@
+INFO:root:Namespace(model_name='DARE', model_mode='CTR')
+INFO:root:--------------------------------------------- BEGIN: 2025-12-30 21:17:59 ---------------------------------------------
+INFO:root:
+==========================================
+ Arguments                  | Values      
+==========================================
+ add_historical_situations  | 0          
+ att_emb_size               | 64         
+ att_layers                 | [64]       
+ batch_size                 | 1024       
+ data_appendix              | _context101
+ dataset                    | MINDCTR    
+ dnn_layers                 | [512,64]   
+ dropout                    | 0.5        
+ early_stop                 | 10         
+ emb_size                   | 64         
+ epoch                      | 200        
+ eval_batch_size            | 256        
+ gpu                        | 0          
+ history_max                | 20         
+ include_item_features      | 1          
+ include_situation_features | 1          
+ include_user_features      | 0          
+ l2                         | 0.0001     
+ loss_n                     | BCE        
+ lr                         | 0.0002     
+ main_metric                |            
+ num_neg                    | 0          
+ num_workers                | 5          
+ optimizer                  | Adam       
+ random_seed                | 0          
+ save_final_results         | 1          
+ test_all                   | 0          
+ time_emb_size              | 16         
+ topk                       | 5,10,20,50 
+ use_time_mode              | concat     
+==========================================
+INFO:root:Device: cuda
+INFO:root:Load corpus from ../data/MINDCTR/ContextSeqReader_context101.pkl
+INFO:root:#params: 2316865
+INFO:root:DARECTR(
+  (loss_fn): BCELoss()
+  (embedding_dict_att): ModuleDict(
+    (user_id): Embedding(13115, 64)
+    (item_id): Embedding(952, 64)
+    (i_category_c): Embedding(15, 64)
+    (i_subcategory_c): Embedding(112, 64)
+    (c_day_f): Linear(in_features=1, out_features=64, bias=False)
+    (c_hour_c): Embedding(24, 64)
+    (c_period_c): Embedding(9, 64)
+    (c_weekday_c): Embedding(5, 64)
+  )
+  (embedding_dict_rep): ModuleDict(
+    (user_id): Embedding(13115, 64)
+    (item_id): Embedding(952, 64)
+    (i_category_c): Embedding(15, 64)
+    (i_subcategory_c): Embedding(112, 64)
+    (c_day_f): Linear(in_features=1, out_features=64, bias=False)
+    (c_hour_c): Embedding(24, 64)
+    (c_period_c): Embedding(9, 64)
+    (c_weekday_c): Embedding(5, 64)
+  )
+  (dnn_mlp_layers): MLP_Block(
+    (mlp): Sequential(
+      (0): Linear(in_features=896, out_features=512, bias=True)
+      (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): Dice(
+        (bn): BatchNorm1d(512, eps=1e-08, momentum=0.1, affine=True, track_running_stats=True)
+        (sigmoid): Sigmoid()
+      )
+      (3): Dropout(p=0.5, inplace=False)
+      (4): Linear(in_features=512, out_features=64, bias=True)
+      (5): BatchNorm1d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (6): Dice(
+        (bn): BatchNorm1d(64, eps=1e-08, momentum=0.1, affine=True, track_running_stats=True)
+        (sigmoid): Sigmoid()
+      )
+      (7): Dropout(p=0.5, inplace=False)
+      (8): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+)
+INFO:root:Test Before Training: (AUC@All:0.4900,LOG_LOSS@All:0.6847)
+INFO:root:Optimizer: Adam
+INFO:root:Epoch 1     loss=0.2073 [75.0 s]	dev=(AUC@All:0.7422,LOG_LOSS@All:0.1743) [33.2 s] *
+INFO:root:Epoch 2     loss=0.1650 [71.9 s]	dev=(AUC@All:0.7225,LOG_LOSS@All:0.1764) [34.4 s]
+INFO:root:Epoch 3     loss=0.1586 [71.3 s]	dev=(AUC@All:0.7189,LOG_LOSS@All:0.1921) [34.3 s]
+INFO:root:Epoch 4     loss=0.1487 [71.0 s]	dev=(AUC@All:0.7214,LOG_LOSS@All:0.1959) [33.8 s]
+INFO:root:Epoch 5     loss=0.1390 [75.1 s]	dev=(AUC@All:0.7124,LOG_LOSS@All:0.1996) [30.6 s]
+INFO:root:Epoch 6     loss=0.1302 [75.6 s]	dev=(AUC@All:0.7155,LOG_LOSS@All:0.2046) [34.1 s]
+INFO:root:Epoch 7     loss=0.1208 [77.1 s]	dev=(AUC@All:0.7110,LOG_LOSS@All:0.2161) [34.7 s]
+INFO:root:Epoch 8     loss=0.1119 [72.9 s]	dev=(AUC@All:0.7102,LOG_LOSS@All:0.2172) [37.0 s]
+INFO:root:Epoch 9     loss=0.1036 [72.5 s]	dev=(AUC@All:0.7093,LOG_LOSS@All:0.2136) [33.2 s]
+INFO:root:Epoch 10    loss=0.0962 [73.9 s]	dev=(AUC@All:0.7114,LOG_LOSS@All:0.2202) [33.2 s]
+INFO:root:Epoch 11    loss=0.0887 [72.3 s]	dev=(AUC@All:0.7040,LOG_LOSS@All:0.2130) [31.5 s]
+INFO:root:Early stop at 11 based on dev result.
+INFO:root:
+Best Iter(dev)=    1	 dev=(AUC@All:0.7422,LOG_LOSS@All:0.1743) [1178.8 s] 
+INFO:root:Load model from ../model/DARECTR/DARECTR__MINDCTR_context101__0__lr=0.0002__l2=0.0001__emb_size=64__att_emb_size=64__att_layers=[64]__add_historical_situations=0__use_time_mode=concat__time_emb_size=16.pt
+INFO:root:
+Dev  After Training: (AUC@All:0.7422,LOG_LOSS@All:0.1743)
+INFO:root:
+Test After Training: (AUC@All:0.7163,LOG_LOSS@All:0.1733)
+INFO:root:Saving CTR prediction results to: ../log/DARECTR/DARECTR__MINDCTR_context101__0__lr=0/rec-DARECTR-dev.csv
+INFO:root:dev Prediction results saved!
+INFO:root:Saving CTR prediction results to: ../log/DARECTR/DARECTR__MINDCTR_context101__0__lr=0/rec-DARECTR-test.csv
+INFO:root:test Prediction results saved!
+INFO:root:
+--------------------------------------------- END: 2025-12-30 21:41:24 ---------------------------------------------
